@@ -34,12 +34,14 @@
 
 - [x] Restrict push triggers to the sync script.
 - [x] Guard against staged workflow-file changes.
-- [ ] Run synchronization against the live upstream index.
-- [ ] Confirm the generated commit pushes successfully.
+- [x] Run synchronization against the live upstream index.
+- [x] Confirm the generated commit pushes successfully.
 
 ### Task 4: PR and remote verification
 
-- [ ] Verify workflow conclusion is success.
-- [ ] Verify the branch contains the actual catalog artifacts.
-- [ ] Verify metadata count is at least 1,000.
-- [ ] Update PR #1 with exact counts and validation evidence.
+- [x] Verify workflow conclusion is success.
+- [x] Verify the branch contains the actual catalog artifacts.
+- [x] Verify metadata count is at least 1,000.
+- [x] Verify PR #1 tracks the generated branch head.
+- [x] Record exact counts and validation evidence in `RELEASE_REPORT.md`.
+- [x] Record that upstream PR metadata writes are blocked by the connected integration's HTTP 403 permission boundary.
