@@ -9,6 +9,7 @@ on:
       - '.bootstrap/direct_sources.json'
       - '.bootstrap/sync_direct_skills.py'
       - '.bootstrap/test_sync_direct_skills.py'
+      - '.bootstrap/fix_root_skill_url_validation.py'
       - '.bootstrap/generate_zmz2_wish.py'
       - '.bootstrap/test_generate_zmz2_wish.py'
       - 'scripts/validate_direct_catalog.py'
@@ -47,6 +48,9 @@ jobs:
           echo 'b949eb8397eb4a2b208fec16fa074cf05c673f4817daa9fc227bf0b633e42512  /tmp/road-of-flower-expansion.tar.gz' | sha256sum -c -
           tar -xzf /tmp/road-of-flower-expansion.tar.gz
           rm -rf .bootstrap/expansion-parts
+
+      - name: Repair root-level Skill URL validation
+        run: python .bootstrap/fix_root_skill_url_validation.py
 
       - name: Verify direct-research and wish generators
         shell: bash
