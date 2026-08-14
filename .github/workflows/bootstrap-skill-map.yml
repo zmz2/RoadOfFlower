@@ -1,0 +1,44 @@
+name: Bootstrap Skill Map
+
+on:
+  push:
+    branches:
+      - agent/skill-map-1200
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate and verify final repository tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp .bootstrap/generate_skill_map.py /tmp/generate_skill_map.py
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          python /tmp/generate_skill_map.py "$GITHUB_WORKSPACE"
+          python scripts/validate_catalog.py
+          python -m unittest discover -v
+          python scripts/skill_finder.py '空间组学 质控' --limit 3
+
+      - name: Publish final repository tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish 1,200 Agent Skill blueprints and learning system"
+          git push origin HEAD:agent/skill-map-1200
